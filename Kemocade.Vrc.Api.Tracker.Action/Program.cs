@@ -92,6 +92,7 @@ else
 
 // Map Discord Servers to Server Names, VRC User Roles, and All Roles
 Dictionary<ulong, string> discordGuildIdsToDiscordServerNames = new();
+Dictionary<ulong, int> discordGuildIdsToDiscordMemberCounts = new();
 Dictionary<ulong, Dictionary<string, SocketRole[]>> discordGuildIdsToVrcUserIdsToDiscordRoles = new();
 Dictionary<ulong, SocketRole[]> discordGuildIdsToAllDiscordRoles = new();
 foreach (KeyValuePair<ulong, ulong> kvp in discordServerIdsToChannelIds )
@@ -157,6 +158,7 @@ foreach (KeyValuePair<ulong, ulong> kvp in discordServerIdsToChannelIds )
 
     // Store all gathered information about the Discord Server
     discordGuildIdsToDiscordServerNames.Add(discordGuildId, socketGuild.Name);
+    discordGuildIdsToDiscordMemberCounts.Add(discordGuildId, socketGuild.MemberCount);
     discordGuildIdsToVrcUserIdsToDiscordRoles.Add(discordGuildId, vrcUserIdsToDiscordRoles);
     discordGuildIdsToAllDiscordRoles.Add
     (
@@ -402,6 +404,7 @@ TrackedData data = new()
         d => new TrackedDiscordServer
         {
             Name = discordGuildIdsToDiscordServerNames[d.Key],
+            MemberCount = discordGuildIdsToDiscordMemberCounts[d.Key],
             VrcUsers = discordGuildIdsToVrcDisplayNamesToDiscordRoles[d.Key]
                 .Select(m => GetVrcUserIndex(m.Key))
                 .Where(i => i != -1)

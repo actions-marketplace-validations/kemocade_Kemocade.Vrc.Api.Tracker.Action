@@ -34,6 +34,7 @@ internal record TrackedData
     internal record TrackedDiscordServer
     {
         public required string Name { get; init; }
+        public required int MemberCount { get; init; }
         public required int[] VrcUsers { get; init; }
         public required Dictionary<string, TrackedDiscordServerRole> Roles { get; init; }
 
